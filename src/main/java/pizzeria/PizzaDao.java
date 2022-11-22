@@ -14,9 +14,6 @@ public class PizzaDao {
         Statement statement = dbConnection.createStatement();) {
       
       UUID uuid = UUID.randomUUID();
-      StringBuilder query = new StringBuilder("UPDATE schema1.PIZZA set NAME=");
-      query.append(newPizza.getName()).append(", PRICE=").append(newPizza.getPrice())
-          .append(" WHERE id = ").append(newPizza.getId()).append(";");
 
       statement.executeUpdate("INSERT INTO schema1.PIZZA ( ID, NAME, PRICE) VALUES ('"
           + uuid.toString()
@@ -83,9 +80,12 @@ public class PizzaDao {
     try (Connection dbConnection = (new DatabaseManager()).getConnection();
         Statement statement = dbConnection.createStatement();) {
 
-      StringBuilder query = new StringBuilder("UPDATE schema1.PIZZA set NAME=");
-      query.append(newPizza.getName()).append(", PRICE=").append(newPizza.getPrice())
-          .append(" WHERE id = ").append(newPizza.getId().toString()).append(";");
+      StringBuilder query = new StringBuilder("UPDATE schema1.PIZZA set NAME='");
+      query.append(newPizza.getName()).append("', PRICE=").append(newPizza.getPrice())
+          .append(" WHERE ID='").append(newPizza.getId().toString()).append("';");
+
+      System.out.println(query);
+      statement.executeUpdate(query.toString());
 
       dbConnection.commit();
       dbConnection.close();
