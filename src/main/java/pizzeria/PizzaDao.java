@@ -2,6 +2,7 @@ package pizzeria;
 
 import java.math.BigDecimal;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,11 +15,13 @@ public class PizzaDao {
         Statement statement = dbConnection.createStatement();) {
       
       UUID uuid = UUID.randomUUID();
+      PreparedStatement preparedStatement =
+          dbConnection.prepareStatement("INSERT INTO schema1.PIZZA ( ID, NAME, PRICE) VALUES (?,?,?)");
+      preparedStatement.setString(1, uuid.toString());
+      preparedStatement.setString(2, newPizza.getName());
+      preparedStatement.setBigDecimal(3, newPizza.getPrice());
+      preparedStatement.executeUpdate();
 
-      statement.executeUpdate("INSERT INTO schema1.PIZZA ( ID, NAME, PRICE) VALUES ('"
-          + uuid.toString()
-          + "', '"
-          + newPizza.getName() + "'," + newPizza.getPrice() + ");");
       dbConnection.commit();
       dbConnection.close();
 
@@ -32,7 +35,10 @@ public class PizzaDao {
     try (Connection dbConnection = (new DatabaseManager()).getConnection();
         Statement statement = dbConnection.createStatement();) {
 
-      ResultSet allPizzas = statement.executeQuery("SELECT * FROM schema1.PIZZA");
+      PreparedStatement preparedStatement =
+          dbConnection.prepareStatement("SELECT * FROM schema1.PIZZA");
+      ResultSet allPizzas = preparedStatement.executeQuery();
+          
       while (allPizzas.next()) {
         String id = allPizzas.getString("ID");
         String name = allPizzas.getString("NAME");
@@ -54,10 +60,13 @@ public class PizzaDao {
     Pizza pizza = null;
     try (Connection dbConnection = (new DatabaseManager()).getConnection();
         Statement statement = dbConnection.createStatement();) {
-
-      ResultSet result =
-          statement.executeQuery("SELECT * FROM schema1.PIZZA WHERE ID='" + id + "'");
-
+      
+      PreparedStatement preparedStatement =
+          dbConnection.prepareStatement("SELECT * FROM schema1.PIZZA WHERE ID=?");
+      preparedStatement.setString(1, id);
+      
+      ResultSet result = preparedStatement.executeQuery();
+      
       while (result.next()) {
         pizza = new Pizza(result.getString("NAME"), result.getDouble("PRICE"));
         pizza.setId(UUID.fromString(id));
@@ -74,18 +83,17 @@ public class PizzaDao {
     }
     return pizza;
   }
-
   
   public static void update(final Pizza newPizza) {
     try (Connection dbConnection = (new DatabaseManager()).getConnection();
         Statement statement = dbConnection.createStatement();) {
 
-      StringBuilder query = new StringBuilder("UPDATE schema1.PIZZA set NAME='");
-      query.append(newPizza.getName()).append("', PRICE=").append(newPizza.getPrice())
-          .append(" WHERE ID='").append(newPizza.getId().toString()).append("';");
-
-      System.out.println(query);
-      statement.executeUpdate(query.toString());
+      PreparedStatement preparedStatement = dbConnection
+          .prepareStatement("UPDATE schema1.PIZZA set NAME=?, PRICE=? WHERE ID=?");
+      preparedStatement.setString(1, newPizza.getName());
+      preparedStatement.setBigDecimal(2, newPizza.getPrice());
+      preparedStatement.setString(3, newPizza.getId().toString());
+      preparedStatement.executeUpdate();
 
       dbConnection.commit();
       dbConnection.close();
@@ -100,9 +108,11 @@ public class PizzaDao {
     try (Connection dbConnection = (new DatabaseManager()).getConnection();
         Statement statement = dbConnection.createStatement();) {
 
-      StringBuilder query = new StringBuilder("DELETE FROM schema1.PIZZA where ID='");
-      query.append(id).append("'");
-      statement.executeUpdate(query.toString());
+      PreparedStatement preparedStatement =
+          dbConnection.prepareStatement("DELETE FROM schema1.PIZZA where ID=?");
+      preparedStatement.setString(1, id);
+      preparedStatement.executeUpdate();
+
       dbConnection.commit();
       dbConnection.close();
 
