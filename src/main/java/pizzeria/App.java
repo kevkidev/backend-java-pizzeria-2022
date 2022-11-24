@@ -9,14 +9,13 @@ public class App {
     PizzaDao.readAll();
 
 
-    // Pizza pizza = PizzaDao.read("03253c86-5c0b-411d-a5fc-552fdfd9d269");
+    // Pizza pizza = PizzaDao.read("4779a2ca-67ae-47f4-9dff-a3b5df1aab60");
     // pizza.setName("Napolitaine");
     // System.out.println(pizza);
     // PizzaDao.update(pizza);
     // PizzaDao.readAll();
-    //
-    //
-    // PizzaDao.delete("9c76fc4f-1654-4121-b2d4-be8f5eab0fce");
+
+    // PizzaDao.delete("4779a2ca-67ae-47f4-9dff-a3b5df1aab60");
     // PizzaDao.readAll();
   }
 }
