@@ -1,4 +1,4 @@
-package pizzeria;
+package pizzeria.enitity;
 
 import java.util.UUID;
 import jakarta.persistence.Column;
@@ -8,7 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
 
 @MappedSuperclass
-abstract class MotherEntity {
+public abstract class MotherEntity {
 
   @Id
   @Column(name = "ID")
@@ -44,5 +44,5 @@ abstract class MotherEntity {
     this.uuid = uuid;
   }
 
-  protected abstract void update(MotherEntity source);
+  public abstract void update(MotherEntity source);
 }
