@@ -1,10 +1,20 @@
 package pizzeria.service;
 
 import java.util.List;
-import pizzeria.enitity.Pizza;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import pizzeria.domain.Pizza;
 import pizzeria.repository.PizzaDao;
 
+@Service
 public class PizzaService {
+
+  private PizzaDao pizzaDao;
+
+  public PizzaService(@Autowired final PizzaDao pizzaDao) {
+    super();
+    this.pizzaDao = pizzaDao;
+  }
 
   public void recordList(final List<Pizza> pizzas) {
     try {
@@ -13,7 +23,7 @@ public class PizzaService {
       }
 
       for (Pizza p : pizzas) {
-        PizzaDao.create(p);
+        pizzaDao.create(p);
       }
 
     } catch (NullPointerException e) {
@@ -24,4 +34,27 @@ public class PizzaService {
       e.printStackTrace();
     }
   }
+
+  private void showPizzas() {
+    for (Pizza a : pizzaDao.readAll(Pizza.class)) {
+      System.out.println(a);
+    }
+  }
+
+  private void findPizzaByName(final String name) {
+    for (Pizza a : pizzaDao.readByName(name, Pizza.class)) {
+      System.out.println(a);
+    }
+  }
+
+  public Pizza findPizzaById(long pizzaId) {
+    return pizzaDao.read(pizzaId, Pizza.class);
+  }
+
+  public void addPizzaToSelection(final long pizzaId, final List<Pizza> selection) {
+    Pizza pizza = findPizzaById(pizzaId);
+    selection.add(pizza);
+    System.out.println("Pizza " + pizza.getName() + "selected.");
+  }
+
 }

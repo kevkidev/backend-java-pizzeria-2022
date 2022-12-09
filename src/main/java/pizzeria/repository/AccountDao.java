@@ -1,7 +1,9 @@
 package pizzeria.repository;
 
-import pizzeria.enitity.Account;
+import org.springframework.stereotype.Component;
+import pizzeria.domain.Account;
 
+@Component
 public class AccountDao extends GenericDao<Account> {
 
 }
