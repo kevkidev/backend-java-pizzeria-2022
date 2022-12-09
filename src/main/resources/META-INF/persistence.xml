@@ -10,11 +10,12 @@
 			<property name="jakarta.persistence.jdbc.url"
 				value="jdbc:postgresql://localhost:5432/pizzeria" />
 			<property name="jakarta.persistence.jdbc.user"
-				value="" />
+				value="postgres" />
 			<property name="jakarta.persistence.jdbc.password"
-				value="" />
+				value="root" />
 			<property name="hibernate.show_sql" value="true" />
-			<property name="hibernate.hbm2ddl.auto" value="update" />
+			<!-- <property name="hibernate.hbm2ddl.auto" value="create-drop" /> -->
+			 <property name="hibernate.hbm2ddl.auto" value="update" /> 
 		</properties>
 	</persistence-unit>
 </persistence>
