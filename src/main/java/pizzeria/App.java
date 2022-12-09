@@ -2,52 +2,56 @@ package pizzeria;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
-import pizzeria.enitity.Account;
-import pizzeria.enitity.Order;
-import pizzeria.enitity.Pizza;
-import pizzeria.repository.AccountDao;
-import pizzeria.repository.OrderDao;
-import pizzeria.repository.PizzaDao;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import pizzeria.configuration.DefaultConfiguration;
+import pizzeria.domain.Account;
+import pizzeria.domain.Order;
+import pizzeria.domain.Pizza;
+import pizzeria.service.AccountService;
+import pizzeria.service.OrderService;
 import pizzeria.service.PizzaService;
 
 public class App {
   public static void main(final String[] arg) {
     System.out.println("Pizzeria open");
-    createPizzas();
-    createAccount("@keke");
 
-    Account account = AccountDao.read(1L, Account.class);
+    ApplicationContext context = new AnnotationConfigApplicationContext(DefaultConfiguration.class);
+
+    PizzaService pizzaService = context.getBean(PizzaService.class);
+    OrderService orderService = context.getBean(OrderService.class);
+    AccountService accountService = context.getBean(AccountService.class);
+
+    createPizzas(pizzaService);
+    accountService.createAccount("@keke");
+
+    Account account = accountService.findAccountById(1L);
+
     // update account
     account.setEmail("@rocky2");
-    AccountDao.update(account, Account.class);
+    accountService.updateAccount(account);
 
-    createOrder(account);
+    orderService.createOrder(account);
 
     // selection des pizzas
     List<Pizza> pizzaSelection = new ArrayList<>();
-    selectPizza(2L, pizzaSelection);
-    selectPizza(5L, pizzaSelection);
+    pizzaService.addPizzaToSelection(2L, pizzaSelection);
+    pizzaService.addPizzaToSelection(5L, pizzaSelection);
 
     // add selection to order
-    Order order = OrderDao.read(1L, Order.class);
+    Order order = orderService.findOrderById(1L);
     order.setPizzas(pizzaSelection);
-    OrderDao.update(order, Order.class);
+    orderService.updateOrder(order);
 
-    Order lastOrder = OrderDao.read(1L, Order.class);
+    Order lastOrder = orderService.findOrderById(1L);
+
     // afficher order
     System.out.println("la commande");
     System.out.println(lastOrder.getPizzas());
     System.out.println("Pizzeria closed");
   }
 
-  private static void selectPizza(final long pizzaId, final List<Pizza> selection) {
-    Pizza pizza1 = PizzaDao.read(pizzaId, Pizza.class);
-    selection.add(pizza1);
-    System.out.println("Pizza " + pizza1.getName() + "selected.");
-  }
-
-  private static void createPizzas() {
+  private static void createPizzas(final PizzaService pizzaService) {
     List<Pizza> pizzas = new ArrayList<>();
     pizzas.add(new Pizza("Reine", 10.5));
     pizzas.add(new Pizza("Orientale", 16.5));
@@ -55,35 +59,7 @@ public class App {
     pizzas.add(new Pizza("Norvegienne", 11.5));
     pizzas.add(new Pizza("Margherita", 8.5));
 
-    PizzaService pizzaService = new PizzaService();
     pizzaService.recordList(pizzas);
-  }
-
-  private static void showPizzas() {
-    for (Pizza a : PizzaDao.readAll(Pizza.class)) {
-      System.out.println(a);
-    }
-  }
-
-  private static void findPizzaByName(final String name) {
-    for (Pizza a : PizzaDao.readByName(name, Pizza.class)) {
-      System.out.println(a);
-    }
-  }
-
-  private static void createAccount(final String email) {
-    Account account1 = new Account();
-    account1.setEmail(email);
-    account1.setUuid(UUID.randomUUID().toString());
-    AccountDao.create(account1);
-  }
-
-  private static void createOrder(final Account account) {
-    Order order = new Order();
-    order.setAccount(account);
-    order.setUuid(UUID.randomUUID().toString());
-    order.setPizzas(new ArrayList<>());
-    OrderDao.create(order);
   }
 
 }

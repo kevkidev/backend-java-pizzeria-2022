@@ -1,4 +1,4 @@
-package pizzeria.enitity;
+package pizzeria.domain;
 
 import java.util.UUID;
 import jakarta.persistence.Column;
