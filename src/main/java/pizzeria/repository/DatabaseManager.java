@@ -1,4 +1,4 @@
-package pizzeria;
+package pizzeria.repository;
 
 import java.sql.Connection;
 import jakarta.persistence.EntityManager;

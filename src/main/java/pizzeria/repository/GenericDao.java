@@ -1,13 +1,14 @@
-package pizzeria;
+package pizzeria.repository;
 
 import java.util.List;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
 import jakarta.persistence.TypedQuery;
+import pizzeria.enitity.MotherEntity;
 
 class GenericDao<T> {
 
-  protected static <T> void create(final T object) {
+  public static <T> void create(final T object) {
     EntityManager em = DatabaseManager.getInstance().getEntityManager();
     try {
       EntityTransaction et = em.getTransaction();
@@ -19,7 +20,7 @@ class GenericDao<T> {
     }
   }
 
-  protected static <T> List<T> readAll(Class<T> classResult) {
+  public static <T> List<T> readAll(Class<T> classResult) {
     EntityManager em = DatabaseManager.getInstance().getEntityManager();
     try {
       final String JPQL_QUERY = "select t from " + classResult.getName() + " t";
@@ -30,7 +31,7 @@ class GenericDao<T> {
     }
   }
 
-  protected static <T> T read(final Long id, Class<T> classResult) {
+  public static <T> T read(final Long id, Class<T> classResult) {
     EntityManager em = DatabaseManager.getInstance().getEntityManager();
     try {
       return em.find(classResult, id);
@@ -39,7 +40,7 @@ class GenericDao<T> {
     }
   }
 
-  protected static <T> List<T> readByName(final String name, Class<T> classResult) {
+  public static <T> List<T> readByName(final String name, Class<T> classResult) {
     EntityManager em = DatabaseManager.getInstance().getEntityManager();
     try {
       final String REF_NAME = "name";
@@ -53,7 +54,7 @@ class GenericDao<T> {
     }
   }
 
-  protected static <T extends MotherEntity> void update(final T object, Class<T> classResult) {
+  public static <T extends MotherEntity> void update(final T object, Class<T> classResult) {
     EntityManager em = DatabaseManager.getInstance().getEntityManager();
     try {
       EntityTransaction et = em.getTransaction();
@@ -69,7 +70,7 @@ class GenericDao<T> {
     }
   }
 
-  protected static <T> void delete(final Long id, Class<T> classResult) {
+  public static <T> void delete(final Long id, Class<T> classResult) {
     EntityManager em = DatabaseManager.getInstance().getEntityManager();
     try {
       EntityTransaction et = em.getTransaction();

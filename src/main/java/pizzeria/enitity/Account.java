@@ -1,4 +1,4 @@
-package pizzeria;
+package pizzeria.enitity;
 
 import java.util.List;
 import jakarta.persistence.Entity;
@@ -9,6 +9,7 @@ import jakarta.persistence.Table;
 @Entity
 @Table(schema = "schema1", name = "ACCOUNT")
 public class Account extends MotherEntity {
+
   private String email;
 
   @OneToMany(mappedBy = "account", fetch = FetchType.EAGER)
@@ -31,7 +32,7 @@ public class Account extends MotherEntity {
   }
 
   @Override
-  protected void update(MotherEntity source) {
+  public void update(MotherEntity source) {
     Account s = (Account) source;
     email = s.email;
     orders = s.orders;

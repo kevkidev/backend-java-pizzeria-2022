@@ -1,4 +1,4 @@
-package pizzeria;
+package pizzeria.enitity;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -53,7 +53,7 @@ public class Order extends MotherEntity {
   }
 
   @Override
-  protected void update(MotherEntity source) {
+  public void update(MotherEntity source) {
     Order s = (Order) source;
     amount = s.amount;
     account = s.account;

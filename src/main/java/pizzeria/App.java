@@ -3,6 +3,13 @@ package pizzeria;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import pizzeria.enitity.Account;
+import pizzeria.enitity.Order;
+import pizzeria.enitity.Pizza;
+import pizzeria.repository.AccountDao;
+import pizzeria.repository.OrderDao;
+import pizzeria.repository.PizzaDao;
+import pizzeria.service.PizzaService;
 
 public class App {
   public static void main(final String[] arg) {
@@ -35,7 +42,6 @@ public class App {
   }
 
   private static void selectPizza(final long pizzaId, final List<Pizza> selection) {
-    List<Pizza> pizzaSelection = new ArrayList<>();
     Pizza pizza1 = PizzaDao.read(pizzaId, Pizza.class);
     selection.add(pizza1);
     System.out.println("Pizza " + pizza1.getName() + "selected.");

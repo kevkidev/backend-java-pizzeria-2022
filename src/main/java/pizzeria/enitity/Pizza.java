@@ -1,4 +1,4 @@
-package pizzeria;
+package pizzeria.enitity;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -8,9 +8,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import lombok.ToString;
 
-@ToString
 @Entity
 @Table(schema = "schema1", name = "PIZZA")
 public class Pizza extends MotherEntity {
@@ -30,7 +28,7 @@ public class Pizza extends MotherEntity {
     super();
   }
 
-  Pizza(final String name, final double price) {
+  public Pizza(final String name, final double price) {
     super();
     this.name = name;
     this.price = new BigDecimal(price);
@@ -63,7 +61,7 @@ public class Pizza extends MotherEntity {
   }
 
   @Override
-  protected void update(MotherEntity source) {
+  public void update(MotherEntity source) {
     Pizza s = (Pizza) source;
     name = s.name;
     price = s.price;

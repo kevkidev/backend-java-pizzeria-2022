@@ -1,6 +1,8 @@
-package pizzeria;
+package pizzeria.service;
 
 import java.util.List;
+import pizzeria.enitity.Pizza;
+import pizzeria.repository.PizzaDao;
 
 public class PizzaService {
 
