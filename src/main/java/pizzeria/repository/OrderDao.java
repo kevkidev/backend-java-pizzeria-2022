@@ -1,9 +1,9 @@
 package pizzeria.repository;
 
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 import pizzeria.domain.Order;
 
-@Component
+@Repository
 public class OrderDao extends GenericDao<Order> {
 
 }
