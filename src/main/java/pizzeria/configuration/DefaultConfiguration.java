@@ -23,7 +23,6 @@ public class DefaultConfiguration {
   @Bean
   public EntityManagerFactory entityManagerFactory() {
     return Persistence.createEntityManagerFactory("com.kevkidev.pizzeria.jpa");
-    // return entityManagerFactory.createEntityManager();
   }
 
   @Bean
