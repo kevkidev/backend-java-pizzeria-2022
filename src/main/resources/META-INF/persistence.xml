@@ -6,12 +6,6 @@
 		transaction-type="RESOURCE_LOCAL">
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<properties>
-			<property name="jakarta.persistence.jdbc.url"
-				value="jdbc:postgresql://localhost:5432/pizzeria" />
-			<property name="jakarta.persistence.jdbc.user"
-				value="postgres" />
-			<property name="jakarta.persistence.jdbc.password"
-				value="root" />
 			<property name="hibernate.show_sql" value="true" />
 			<property name="hibernate.hbm2ddl.auto" value="update" />
 			<property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQLDialect" />
