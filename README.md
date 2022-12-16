@@ -1,6 +1,8 @@
 # About
 This is a POC/MVP project to let me use my JAVA et programming skills.
 
+You can navigate to all git branches to see the added features and technical changes.
+
 ## Skills used (not exhaustive):
 - Java 8
 - JDBC
