@@ -2,20 +2,22 @@ package pizzeria.service;
 
 import java.util.ArrayList;
 import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import pizzeria.domain.Account;
 import pizzeria.domain.Order;
-import pizzeria.repository.OrderDao;
+import pizzeria.repository.OrderRepository;
 
 @Service
 public class OrderService {
 
-  private OrderDao orderDao;
+  private OrderRepository repository;
 
-  public OrderService(@Autowired final OrderDao orderDao) {
+  public OrderService(@Autowired final OrderRepository orderDao) {
     super();
-    this.orderDao = orderDao;
+    this.repository = orderDao;
   }
 
   public void createOrder(final Account account) {
@@ -23,14 +25,14 @@ public class OrderService {
     order.setAccount(account);
     order.setUuid(UUID.randomUUID().toString());
     order.setPizzas(new ArrayList<>());
-    orderDao.create(order);
+    repository.save(order);
   }
 
   public Order findOrderById(long l) {
-    return orderDao.read(1L, Order.class);
+    return repository.findById(1L).get();
   }
 
   public void updateOrder(Order order) {
-    orderDao.update(order, Order.class);
+    repository.save(order);
   }
 }

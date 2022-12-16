@@ -1,19 +1,21 @@
 package pizzeria.service;
 
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import pizzeria.domain.Pizza;
-import pizzeria.repository.PizzaDao;
+import pizzeria.repository.PizzaRepository;
 
 @Service
 public class PizzaService {
 
-  private PizzaDao pizzaDao;
+  private PizzaRepository repository;
 
-  public PizzaService(@Autowired final PizzaDao pizzaDao) {
+  public PizzaService(@Autowired final PizzaRepository repository) {
     super();
-    this.pizzaDao = pizzaDao;
+    this.repository = repository;
   }
 
   public void recordList(final List<Pizza> pizzas) {
@@ -23,7 +25,7 @@ public class PizzaService {
       }
 
       for (Pizza p : pizzas) {
-        pizzaDao.create(p);
+        repository.save(p);
       }
 
     } catch (NullPointerException e) {
@@ -36,19 +38,19 @@ public class PizzaService {
   }
 
   private void showPizzas() {
-    for (Pizza a : pizzaDao.readAll(Pizza.class)) {
+    for (Pizza a : repository.findAll()) {
       System.out.println(a);
     }
   }
 
-  private void findPizzaByName(final String name) {
-    for (Pizza a : pizzaDao.readByName(name, Pizza.class)) {
+  private void showPizzaByName(final String name) {
+    for (Pizza a : repository.findByName(name)) {
       System.out.println(a);
     }
   }
 
   public Pizza findPizzaById(long pizzaId) {
-    return pizzaDao.read(pizzaId, Pizza.class);
+    return repository.findById(pizzaId).get();
   }
 
   public void addPizzaToSelection(final long pizzaId, final List<Pizza> selection) {

@@ -2,8 +2,10 @@ package pizzeria;
 
 import java.util.ArrayList;
 import java.util.List;
-import org.springframework.context.ApplicationContext;
+
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import pizzeria.configuration.DataSourceConfiguration;
 import pizzeria.configuration.DefaultConfiguration;
 import pizzeria.domain.Account;
 import pizzeria.domain.Order;
@@ -16,7 +18,11 @@ public class App {
   public static void main(final String[] arg) {
     System.out.println("Pizzeria open");
 
-    ApplicationContext context = new AnnotationConfigApplicationContext(DefaultConfiguration.class);
+    AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext();
+    // register autant de config voulu
+    context.register(DataSourceConfiguration.class);
+    context.register(DefaultConfiguration.class);
+    context.refresh();
 
     PizzaService pizzaService = context.getBean(PizzaService.class);
     OrderService orderService = context.getBean(OrderService.class);
