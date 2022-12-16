@@ -1,3 +1,27 @@
+# About
+This is a POC/MVP project to let me use my JAVA et programming skills.
+
+## Skills used (not exhaustive):
+- Java 8
+- JDBC
+- JPA / Hibernate
+- Spring IOC
+- Spring ORM
+- Spring transtation
+- Spring Data
+- Posgres
+- Eclipse
+- reading .properties file using annotations
+- ... (coming soon)
+
+## Designs/principals/Architectures (not exhaustive):
+- SOLID
+- DRY
+- ACID
+- OOP
+- functionnal programming (stream)
+- ... (coming soon)
+
 # Config
 
 ## Database
