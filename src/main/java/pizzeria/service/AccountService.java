@@ -1,34 +1,36 @@
 package pizzeria.service;
 
 import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import pizzeria.domain.Account;
-import pizzeria.repository.AccountDao;
+import pizzeria.repository.AccountRepository;
 
 @Service
 public class AccountService {
 
-  private AccountDao accountDao;
+  private AccountRepository repository;
 
-  public AccountService(@Autowired final AccountDao accountDao) {
+  public AccountService(@Autowired final AccountRepository accountDao) {
     super();
-    this.accountDao = accountDao;
+    this.repository = accountDao;
   }
 
   public void createAccount(final String email) {
     Account account1 = new Account();
     account1.setEmail(email);
     account1.setUuid(UUID.randomUUID().toString());
-    accountDao.create(account1);
+    repository.save(account1);
   }
 
   public Account findAccountById(final long accountId) {
-    return accountDao.read(1L, Account.class);
+    return repository.findById(accountId).get();
   }
 
   public void updateAccount(Account account) {
-    accountDao.update(account, Account.class);
+    repository.save(account);
   }
 
 }
